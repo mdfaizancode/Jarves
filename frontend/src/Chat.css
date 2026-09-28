@@ -1,0 +1,36 @@
+.chats{
+    max-width: 700px;
+    overflow-y: auto;
+    scrollbar-width: none;  
+    padding: 8rem;
+}
+.userDiv{
+   display: flex;
+   justify-content:flex-end;
+   font-size: 1rem;
+}
+.jarvesDiv{
+    text-align: left;
+    font-size: 1rem;
+}
+.userMessage{
+    background-color: #323232;
+    padding: 10px 20px;
+    border-radius: 14px;
+    margin-left: 15rem;
+    max-width: 500px;
+    width: fit-content;
+}
+/* .jarvesMessage{
+
+} */
+
+.hljs{
+    border-radius: 15px;
+}
+
+/* start a new chat */
+.startNewChat{
+  font-family: "IM Fell English", serif;
+  font-style: normal;   
+}
