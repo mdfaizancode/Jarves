@@ -70,7 +70,7 @@ function Sidebar() {
         <span ><h5>New Chat</h5> </span>
        <span> <i className="fa-regular fa-pen-to-square"></i> </span>
       </button>
-      <h5> &nbsp; Recents <i className="fa-solid fa-chevron-down"></i></h5>
+      <h5 className='recents'> &nbsp; Recents <i className="fa-solid fa-chevron-down"></i></h5>
 
       <ul className='history'>
           {

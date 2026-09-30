@@ -8,7 +8,7 @@ import chatRouter from "./routes/Chat.js";
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const app = express();
-const PORT = 5000;
+const PORT = 'https://jarves6-o.onrender.com';
 
 app.use(cors());
 app.use(express.json());
