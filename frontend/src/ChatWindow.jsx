@@ -5,10 +5,11 @@ import { useContext, useEffect, useState } from 'react';
 import { CircleLoader } from "react-spinners";
 import { API_BASE_URL } from './api.js';
 
-function ChatWindow() {
+function ChatWindow({ onOpenSidebar }) {
   const { prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat } = useContext(MyContext);
   const [loading, setLoading] = useState(false);
   const [pendingMessage, setPendingMessage] = useState("");
+  const [requestError, setRequestError] = useState("");
   const [isOpen , setIsOpen] = useState(false) // set as false ; 
 
   const getReply = async () => {
@@ -16,6 +17,7 @@ function ChatWindow() {
     const message = prompt.trim();
     if (!message || loading) return;
 
+    setRequestError("");
     setPendingMessage(message);
     setLoading(true);
     
@@ -34,9 +36,17 @@ function ChatWindow() {
     try {
       const response = await fetch(`${API_BASE_URL}/api/chat`, options);
       const res = await response.json();
+      if (!response.ok) {
+        throw new Error(res.error || `Request failed (${response.status})`);
+      }
+      if (typeof res.reply !== "string" || !res.reply.trim()) {
+        throw new Error("The assistant returned an empty reply. Please try again.");
+      }
       setReply(res.reply);
     } catch (err) {
       console.error(err);
+      setRequestError(err.message || "Unable to reach the assistant. Please try again.");
+      setPendingMessage("");
       setLoading(false);
     }
   };
@@ -64,6 +74,9 @@ function ChatWindow() {
   return (
     <div className='chatWindow'>
       <div className='navbar'>
+        <button className='menuButton' aria-label='Open navigation' onClick={onOpenSidebar}>
+          <i className='fa-solid fa-bars'></i>
+        </button>
         <span className='font-design'> Jarves <i className="fa-brands fa-studiovinari"></i></span>
         <div className='userIconDiv'>
           <span className='userIcon'><i  onClick={handleClickAuth} className="fa-regular fa-user"></i></span>
@@ -81,6 +94,7 @@ function ChatWindow() {
 
       <Chat />
       <CircleLoader color='#fff' loading={loading} />
+      {requestError && <p className='requestError' role='alert'>{requestError}</p>}
 
       <div className='chatInput'>
         <div className='inputBox'>

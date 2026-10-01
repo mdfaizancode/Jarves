@@ -8,6 +8,7 @@ import {v1 as uuidv1} from "uuid";
 
 
 function App() {  
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [prompt , setPrompt] = useState("");
   const [reply , setReply] = useState(null);
   const [currThreadId, setCurrentThreadId] = useState( uuidv1());
@@ -27,8 +28,9 @@ function App() {
   return (
     <div className='app'>
     <MyContext value={providerValues} >
-    <Sidebar/>
-    <ChatWindow/>
+    <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+    {isSidebarOpen && <button className='sidebarBackdrop' aria-label='Close navigation' onClick={() => setIsSidebarOpen(false)} />}
+    <ChatWindow onOpenSidebar={() => setIsSidebarOpen(true)} />
     </MyContext>
     </div>
   )

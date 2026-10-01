@@ -90,7 +90,11 @@ router.post("/chat", async(req,res)=>{
 
         }catch(err){
             console.log(err);
-            res.status(500).json({error:"Some error "});
+            const status = Number.isInteger(err.status) ? err.status : 500;
+            const error = err.code === "too_many_requests" || status === 429
+                ? "Gemini API quota or rate limit reached. Check Google AI Studio usage and billing."
+                : err.status ? err.message : "Assistant request failed. Please try again.";
+            res.status(status).json({error});
         }
     })
 

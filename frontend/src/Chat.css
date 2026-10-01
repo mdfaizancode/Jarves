@@ -1,25 +1,50 @@
+.chatContent{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    width: 100%;
+}
+
+.emptyChat{
+    justify-content: center;
+}
+
+.emptyChat .chats{
+    flex: 0;
+    height: 0;
+    padding: 0;
+}
+
 .chats{
-    max-width: 700px;
+    width: min(100%, 768px);
+    margin: 0 auto;
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
-    scrollbar-width: none;  
-    padding: 8rem;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    padding: 24px;
 }
 .userDiv{
    display: flex;
-   justify-content:flex-end;
+   justify-content: flex-end;
    font-size: 1rem;
+   min-width: 0;
 }
 .jarvesDiv{
     text-align: left;
     font-size: 1rem;
+    overflow-wrap: anywhere;
 }
 .userMessage{
     background-color: #323232;
     padding: 10px 20px;
     border-radius: 14px;
-    margin-left: 15rem;
-    max-width: 500px;
+    margin: 0 0 16px;
+    max-width: min(80%, 560px);
     width: fit-content;
+    overflow-wrap: anywhere;
 }
 /* .jarvesMessage{
 
@@ -29,8 +54,27 @@
     border-radius: 15px;
 }
 
+.jarvesDiv pre{
+    max-width: 100%;
+    overflow-x: auto;
+}
+
 /* start a new chat */
 .startNewChat{
   font-family: "IM Fell English", serif;
-  font-style: normal;   
+    font-style: normal;
+    align-self: center;
+    margin: 0 16px;
+    text-align: center;
+}
+
+@media (max-width: 700px){
+        .chats{
+                padding: 18px 16px;
+        }
+
+        .userMessage{
+                max-width: 88%;
+                padding: 10px 14px;
+        }
 }

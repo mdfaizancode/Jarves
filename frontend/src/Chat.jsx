@@ -38,9 +38,9 @@ function Chat() {
   }, [prevChats]);
 
   return (
-    <>
-    {newChat && <h1 className='startNewChat'>Start a New Chat</h1>}
-    <div className='chats'>
+    <div className={`chatContent${newChat ? ' emptyChat' : ''}`}>
+      {newChat && <h1 className='startNewChat'>Start a New Chat</h1>}
+      <div className='chats'>
       {
         prevChats?.map((chat,idx)=>
           <div className={chat.role === "user"? "userDiv": "jarvesDiv"} key={idx}>
@@ -55,8 +55,8 @@ function Chat() {
         )
       }
 
+      </div>
     </div>
-    </>
   )
 }
 
