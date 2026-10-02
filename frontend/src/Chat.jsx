@@ -39,7 +39,7 @@ function Chat() {
 
   return (
     <div className={`chatContent${newChat ? ' emptyChat' : ''}`}>
-      {newChat && <h1 className='startNewChat'>Start a New Chat</h1>}
+      {newChat && <h1 className='startNewChat'>Ask Your Wish</h1>}
       <div className='chats'>
       {
         prevChats?.map((chat,idx)=>
