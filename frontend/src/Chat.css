@@ -1,4 +1,4 @@
-.chatContent{
+.chatContent {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -6,75 +6,246 @@
     width: 100%;
 }
 
-.emptyChat{
+.emptyChat {
     justify-content: center;
 }
 
-.emptyChat .chats{
+.emptyChat .chats {
     flex: 0;
     height: 0;
     padding: 0;
 }
 
-.chats{
-    width: min(100%, 768px);
+.welcomePanel {
+    width: min(100% - 48px, 760px);
+    margin: auto;
+    padding: 32px 0;
+    text-align: center;
+    animation: welcome-rise 550ms ease both;
+}
+
+.welcomePanel h1 {
+    margin: 0 0 12px;
+    font-family: "IM Fell English", Georgia, serif;
+    font-size: clamp(2.25rem, 5vw, 4.2rem);
+    font-weight: 400;
+    letter-spacing: -0.045em;
+    line-height: 1.08;
+}
+
+.welcomePanel h1 span {
+    color: var(--gold-soft);
+    font-family: inherit;
+}
+
+.suggestionGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 36px;
+}
+
+.suggestionCard {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 11px;
+    min-height: 62px;
+    margin: 0;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+    color: var(--text-primary);
+    text-align: left;
+    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.suggestionCard:hover {
+    transform: translateY(-2px);
+    border-color: rgba(202, 168, 110, 0.55);
+    background: rgba(202, 168, 110, 0.08);
+}
+
+.suggestionCard > i:first-child {
+    flex: 0 0 auto;
+    color: var(--gold);
+    font-size: 0.95rem;
+}
+
+.suggestionCard span {
+    flex: 1;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.suggestionCard .suggestionArrow {
+    flex: 0 0 auto;
+    color: var(--text-muted);
+    font-size: 0.68rem;
+}
+
+.chats {
+    width: min(100%, 820px);
     margin: 0 auto;
     flex: 1;
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    scrollbar-color: rgba(202, 168, 110, 0.35) transparent;
     scrollbar-width: thin;
-    padding: 24px;
+    padding: 28px 32px;
+    scroll-behavior: smooth;
 }
-.userDiv{
-   display: flex;
-   justify-content: flex-end;
-   font-size: 1rem;
-   min-width: 0;
+
+.userDiv {
+    display: flex;
+    justify-content: flex-end;
+    min-width: 0;
+    font-size: 0.96rem;
 }
-.jarvesDiv{
-    text-align: left;
-    font-size: 1rem;
+
+.jarvesDiv {
+    margin: 0 0 28px;
+    color: var(--text-primary);
+    font-size: 0.96rem;
+    line-height: 1.8;
     overflow-wrap: anywhere;
 }
-.userMessage{
-    background-color: #323232;
-    padding: 10px 20px;
-    border-radius: 14px;
-    margin: 0 0 16px;
-    max-width: min(80%, 560px);
+
+.jarvesDiv > :first-child {
+    margin-top: 0;
+}
+
+.jarvesDiv > :last-child {
+    margin-bottom: 0;
+}
+
+.messageActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.copyReplyButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0;
+    padding: 6px 9px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: #99968d;
+    cursor: pointer;
+    font-size: 0.74rem;
+    transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.copyReplyButton:hover {
+    border-color: var(--border);
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--gold-soft);
+}
+
+.copyReplyButton i {
+    color: inherit;
+}
+
+.copyError {
+    color: #ffb4ab;
+    font-size: 0.75rem;
+}
+
+.jarvesDiv h1,
+.jarvesDiv h2,
+.jarvesDiv h3 {
+    color: #f2e6d2;
+    font-family: "IM Fell English", Georgia, serif;
+    font-weight: 400;
+}
+
+.jarvesDiv a {
+    color: var(--gold-soft);
+}
+
+.jarvesDiv blockquote {
+    margin: 18px 0;
+    padding: 4px 0 4px 16px;
+    border-left: 2px solid var(--gold);
+    color: var(--text-muted);
+}
+
+.userMessage {
     width: fit-content;
+    max-width: min(82%, 580px);
+    margin: 0 0 18px;
+    padding: 12px 17px;
+    border: 1px solid rgba(202, 168, 110, 0.16);
+    border-radius: 18px 18px 5px 18px;
+    background: linear-gradient(135deg, rgba(202, 168, 110, 0.15), rgba(202, 168, 110, 0.075));
+    color: #f4ead8;
     overflow-wrap: anywhere;
-}
-/* .jarvesMessage{
-
-} */
-
-.hljs{
-    border-radius: 15px;
+    white-space: pre-wrap;
+    line-height: 1.6;
 }
 
-.jarvesDiv pre{
+.hljs {
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+.jarvesDiv pre {
     max-width: 100%;
     overflow-x: auto;
+    border-radius: 13px;
 }
 
-/* start a new chat */
-.startNewChat{
-  font-family: "IM Fell English", serif;
-    font-style: normal;
-    align-self: center;
-    margin: 0 16px;
-    text-align: center;
+@keyframes welcome-rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 700px){
-        .chats{
-                padding: 18px 16px;
-        }
+@media (max-width: 700px) {
+    .welcomePanel {
+        width: min(100% - 36px, 520px);
+        padding: 24px 0;
+    }
 
-        .userMessage{
-                max-width: 88%;
-                padding: 10px 14px;
-        }
+    .welcomePanel h1 {
+        font-size: clamp(2.15rem, 10vw, 3.2rem);
+    }
+
+    .suggestionGrid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        margin: 25px auto 0;
+        max-width: 380px;
+    }
+
+    .suggestionCard {
+        min-height: 54px;
+        padding: 12px 14px;
+    }
+
+    .chats {
+        padding: 20px 16px;
+    }
+
+    .userMessage {
+        max-width: 90%;
+        padding: 11px 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .welcomePanel {
+        animation: none;
+    }
+
+    .suggestionCard {
+        transition: none;
+    }
 }

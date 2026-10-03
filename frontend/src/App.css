@@ -1,39 +1,71 @@
-*{
-   color: #ececec;
-   font-family: 'Open Sans', "Helvetica Neue", sans-serif;
-   box-sizing: border-box;
-}
-html, #root{
-    min-height: 100%;
-}
-body{
-    margin: 0;
-    padding: 0;
+:root {
+    color-scheme: dark;
+    --gold: #caa86e;
+    --gold-soft: #e4cfaa;
+    --text-primary: #ece9e2;
+    --text-muted: #a19f98;
+    --border: rgba(223, 207, 176, 0.13);
 }
 
-.app{
-    background-color: #212121;
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    min-width: 320px;
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    padding: 0;
+    background: #111211;
+    color: var(--text-primary);
+    font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+.app {
+    position: relative;
     display: flex;
+    width: 100%;
     height: 100dvh;
     min-height: 0;
     overflow: hidden;
-    position: relative;
+    background: #111211;
 }
 
-.sidebarBackdrop{
+.sidebarBackdrop {
     display: none;
 }
 
-@media (max-width: 700px){
-    .sidebarBackdrop{
-        display: block;
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+    .sidebarBackdrop {
         position: fixed;
         inset: 0;
         z-index: 5;
+        display: block;
         margin: 0;
         padding: 0;
         border: 0;
         border-radius: 0;
-        background: rgba(0, 0, 0, 0.55);
+        background: rgba(0, 0, 0, 0.62);
+        backdrop-filter: blur(3px);
     }
 }

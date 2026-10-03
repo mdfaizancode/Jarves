@@ -22,7 +22,7 @@ router.post('/test' , async(req , res )=>{
 
 router.get("/thread", async(req,res)=>{
     try{
-        const threads = await Thread.find({}).sort({updateAt: -1});
+        const threads = await Thread.find({}).sort({updatedAt: -1});
         res.json(threads);
     }catch(err){
         console.log(err);
@@ -35,7 +35,7 @@ router.get("/thread/:threadId", async(req,res)=>{
         try{
             const thread = await Thread.findOne({threadId});
             if(!thread){
-                res.status(500).json({error:"thread not found"});
+                return res.status(404).json({error:"thread not found"});
             }
             res.json(thread.messages);
 
@@ -51,9 +51,9 @@ router.delete("/thread/:threadId", async(req,res)=>{
             const deletedThread= await Thread.findOneAndDelete({threadId});
 
             if(!deletedThread){
-                res.status(500).json({error: "thread not found"});
+                return res.status(404).json({error: "thread not found"});
             }
-            res.status(200).json({success: "Thread delete Successfully"}); 
+            return res.status(200).json({success: "Thread deleted successfully"});
 
         }catch(err){
             console.log(err);
@@ -62,14 +62,19 @@ router.delete("/thread/:threadId", async(req,res)=>{
     })
 
 router.post("/chat", async(req,res)=>{
-        const {threadId , message} = req.body;
+        const {threadId , message} = req.body || {};
         
-        if(!threadId || !message){
-            res.status(400).json({error: " missing required fields"});
+        if(typeof threadId !== "string" || !threadId.trim() || typeof message !== "string" || !message.trim()){
+            return res.status(400).json({error: "Thread ID and message are required."});
         }
 
-        try{
-            let thread  = await Thread.findOne({threadId});
+            const controller = new AbortController();
+            res.on("close", () => {
+                if (!res.writableEnded) controller.abort();
+            });
+
+            try{
+                let thread  = await Thread.findOne({threadId});
             
             if(!thread){
                 thread = new Thread({
@@ -80,15 +85,16 @@ router.post("/chat", async(req,res)=>{
             }else{
                 thread.messages.push({role:"user", content: message});
             }
-          const assistantReply = await  GoogleAiApi(message);
+          const assistantReply = await GoogleAiApi(message, controller.signal);
           
           thread.messages.push({role: "assistant", content: assistantReply});
           thread.updatedAt = new Date();
 
           await thread.save();
-          res.json({reply: assistantReply});
+          return res.json({reply: assistantReply});
 
         }catch(err){
+            if (controller.signal.aborted) return;
             console.log(err);
             const status = Number.isInteger(err.status) ? err.status : 500;
             const error = err.code === "too_many_requests" || status === 429

@@ -3,7 +3,7 @@ import './index.css';
 import ChatWindow from './ChatWindow.jsx';
 import Sidebar from './Sidebar.jsx';
 import { MyContext } from './MyContext.jsx';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {v1 as uuidv1} from "uuid";
 
 
@@ -15,6 +15,26 @@ function App() {
   const [prevChats , setPrevChats] = useState([]);
   const [newChat , setNewChat] = useState(true);
   const [allThreads , setAllThreads] = useState([]);
+  const [isBusy, setIsBusy] = useState(false);
+  const [requestError, setRequestError] = useState("");
+
+  useEffect(() => {
+    if (!isSidebarOpen) return undefined;
+    const closeOnEscape = event => {
+      if (event.key === "Escape") setIsSidebarOpen(false);
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [isSidebarOpen]);
+
+  const startNewChat = useCallback(() => {
+    setPrompt("");
+    setCurrentThreadId(uuidv1());
+    setPrevChats([]);
+    setNewChat(true);
+    setReply(null);
+    setRequestError("");
+  }, []);
 
   const providerValues = {
     prompt, setPrompt,
@@ -23,14 +43,17 @@ function App() {
     prevChats, setPrevChats,
     newChat, setNewChat,
     allThreads, setAllThreads,
+    startNewChat,
+    isBusy, setIsBusy,
+    requestError, setRequestError,
   }; 
 
   return (
     <div className='app'>
     <MyContext value={providerValues} >
-    <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-    {isSidebarOpen && <button className='sidebarBackdrop' aria-label='Close navigation' onClick={() => setIsSidebarOpen(false)} />}
-    <ChatWindow onOpenSidebar={() => setIsSidebarOpen(true)} />
+    <Sidebar isOpen={isSidebarOpen} isBusy={isBusy} onClose={() => setIsSidebarOpen(false)} />
+    {isSidebarOpen && <button className='sidebarBackdrop' type='button' aria-label='Close navigation' onClick={() => setIsSidebarOpen(false)} />}
+    <ChatWindow isSidebarOpen={isSidebarOpen} onOpenSidebar={() => setIsSidebarOpen(true)} />
     </MyContext>
     </div>
   )

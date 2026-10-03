@@ -1,117 +1,330 @@
-.sidebar{
-    background-color: #171717;
-    color:#b4b4b4;
-    height: 100dvh;
-    width: 260px;
-    flex: 0 0 260px;
-    min-height: 0;
+.sidebar {
+    z-index: 6;
     display: flex;
+    flex: 0 0 276px;
     flex-direction: column;
     justify-content: space-between;
-    border-right:  solid 0.8px rgba(76, 73, 73, 0.5);
-    
+    width: 276px;
+    height: 100dvh;
+    min-height: 0;
+    border-right: 1px solid var(--border);
+    background:
+        radial-gradient(ellipse at 0 0, rgba(202, 168, 110, 0.055), transparent 24rem),
+        #151614;
+    color: var(--text-muted);
 }
 
-button{
+.sidebarTop {
     display: flex;
-    justify-content: space-between;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    padding-top: 18px;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+    margin: 0 17px 24px;
+    border: 1px solid rgba(202, 168, 110, 0.35);
+    border-radius: 14px;
+    background: rgba(202, 168, 110, 0.1);
+    object-fit: cover;
+}
+
+.newChatBtn {
+    display: flex;
     align-items: center;
-    margin: 8px;
-    padding: 5px;
-    border-radius: 7px;
-    background-color: transparent;
-    border: solid 1.5px rgba(99, 91, 91, 0.5);
+    justify-content: space-between;
+    min-height: 48px;
+    margin: 0 13px 23px;
+    padding: 8px 13px;
+    border: 1px solid rgba(202, 168, 110, 0.28);
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(202, 168, 110, 0.14), rgba(202, 168, 110, 0.055));
+    color: #e9dcc5;
     cursor: pointer;
-    background-color: #252424;
+    transition: border-color 160ms ease, background 160ms ease;
 }
 
-button:hover{
-    background-color: rgba(180,180,180, 0.1);
+.newChatBtn:hover:not(:disabled) {
+    border-color: rgba(202, 168, 110, 0.6);
+    background: rgba(202, 168, 110, 0.15);
 }
 
-.logo{
-    height: 40px; 
-    width: 40px;
-    background-color: white;
-    border-radius: 50%;
-    margin: 10px;
+.newChatBtn:disabled {
+    cursor: wait;
+    opacity: 0.55;
 }
 
-button span{
-    font-size: 20px;
-}
-button span h5{
-    margin:6px;
+.newChatBtn > i {
+    color: var(--gold);
 }
 
-.history{
+.newChatBtn span h5 {
+    margin: 0;
+    color: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.recentsRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 14px 8px 20px;
+}
+
+.recents {
+    margin: 0;
+    color: #85847d;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.historyToggle {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #77766f;
+    cursor: pointer;
+}
+
+.historyToggle:hover {
+    background: rgba(202, 168, 110, 0.08);
+    color: var(--gold-soft);
+}
+
+.historyToggle i {
+    color: inherit;
+    font-size: 0.65rem;
+}
+
+.historySearch {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 38px;
+    margin: 0 12px 7px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.025);
+    color: #828078;
+}
+
+.historySearch > i {
+    color: inherit;
+    font-size: 0.75rem;
+}
+
+.historySearch input {
+    width: 100%;
+    min-width: 0;
+    padding: 8px 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 0.78rem;
+}
+
+.historySearch input::placeholder {
+    color: #77766f;
+}
+
+.historySearch input:focus-visible {
+    outline: 0;
+}
+
+.historySearch:focus-within {
+    border-color: rgba(202, 168, 110, 0.55);
+}
+
+.historySearch button {
+    display: flex;
+    width: 26px;
+    height: 26px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #99968d;
+    cursor: pointer;
+}
+
+.historySearch button i {
+    color: inherit;
+    font-size: 0.75rem;
+}
+
+.history {
     flex: 1;
     min-height: 0;
     overflow-y: auto;
-    margin: 10px; 
-    padding: 10px;
+    margin: 0 8px;
+    padding: 4px;
+    scrollbar-color: rgba(202, 168, 110, 0.25) transparent;
+    scrollbar-width: thin;
 }
-.history li{
-    list-style-type: none;
-    cursor: pointer;
-    padding: 2px, 5px;
-    margin-bottom: 0.3rem;
-    font-size: 14px;
-    border: solid 10px transparent;
+
+.historyItem {
     position: relative;
-}
-
-.history li:hover{
-    background-color: rgba(180,180,180, 0.1);
-    border-radius: 7px;
-}
-
-.sign{
-    margin: 5px;
-    padding: 5px;
-    text-align: center;
-    font-size: 15px;
-    border-top: 1px solid rgb(159, 157, 157);
-}
-
-.fa-trash{
-    opacity: 0;
-    position: absolute;
-    right:0;
-}
-
-.history li:hover .fa-trash{
-    opacity: 1; 
-    color: #fff;
-}
-.fa-trash:hover{
-    color: red !important;
-}
-
-.highLighted{
-    background-color: rgba(180,180,180,0.1);
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    margin-bottom: 4px;
+    border: 1px solid transparent;
     border-radius: 10px;
+    transition: border-color 150ms ease, background 150ms ease;
 }
 
-.recents{
-    color:#a19797;
-}
-.recents i{
-    color:#a19797;
+.historyItem:hover,
+.historyItem:focus-within,
+.historyItem.highLighted {
+    border-color: rgba(202, 168, 110, 0.11);
+    background: rgba(202, 168, 110, 0.075);
 }
 
-@media (max-width: 700px){
-    .sidebar{
+.threadOpenButton {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 11px 4px 11px 13px;
+    border: 0;
+    background: transparent;
+    color: #b3b1aa;
+    cursor: pointer;
+    font-size: 0.83rem;
+    line-height: 1.4;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.threadOpenButton:hover:not(:disabled),
+.threadOpenButton.highLighted {
+    background: transparent;
+    color: #eee4d2;
+}
+
+.threadOpenButton:disabled {
+    cursor: wait;
+    opacity: 0.55;
+}
+
+.deleteThreadButton {
+    display: flex;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px 0 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #8c8980;
+    cursor: pointer;
+    opacity: 0;
+    transition: color 150ms ease, opacity 150ms ease;
+}
+
+.deleteThreadButton i {
+    color: inherit;
+    font-size: 0.76rem;
+}
+
+.deleteThreadButton:hover {
+    color: #e39b8b;
+}
+
+.deleteThreadButton:disabled {
+    cursor: wait;
+}
+
+.historyItem:hover .deleteThreadButton,
+.historyItem:focus-within .deleteThreadButton {
+    opacity: 1;
+}
+
+.historyMessage {
+    list-style: none;
+    padding: 12px 13px;
+    color: #85847d;
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+.sidebarError {
+    margin: 3px 13px 8px;
+    color: #ffb4ab;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.sign {
+    flex-shrink: 0;
+    margin: 8px 14px 12px;
+    padding: 14px 5px 8px;
+    border-top: 1px solid var(--border);
+    color: #86847d;
+    font-size: 0.77rem;
+    text-align: center;
+}
+
+.sign .startNewChat {
+    margin: 0;
+    color: #aaa69c;
+    font-family: "IM Fell English", Georgia, serif;
+    font-size: 0.95rem;
+    font-style: normal;
+}
+
+.sign .startNewChat i {
+    color: var(--gold);
+}
+
+@media (max-width: 700px) {
+    .sidebar {
         position: fixed;
         inset: 0 auto 0 0;
         z-index: 10;
-        width: min(82vw, 320px);
+        width: min(84vw, 320px);
         height: 100dvh;
+        flex-basis: auto;
         transform: translateX(-100%);
-        transition: transform 180ms ease-out;
+        transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        will-change: transform;
     }
 
-    .sidebarOpen{
+    .sidebarOpen {
         transform: translateX(0);
+    }
+
+    .deleteThreadButton {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .newChatBtn,
+    .historyItem,
+    .deleteThreadButton,
+    .sidebar {
+        transition: none;
     }
 }

@@ -9,9 +9,20 @@ dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const allowedOrigins = new Set([
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://jarves6-i.onrender.com",
+  ...(process.env.CORS_ORIGINS || "").split(",").map(origin => origin.trim()).filter(Boolean),
+]);
 
 app.use(cors({
-  origin: ["http://localhost:5173", "https://jarves6-i.onrender.com"].filter(Boolean),
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.has(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Origin is not allowed by CORS."));
+  },
   credentials:true
 }));
 

@@ -59,10 +59,11 @@
 
 import "dotenv/config";
 
-const GoogleAiApi = async(message) =>{
+const GoogleAiApi = async(message, signal) =>{
     
   const options = {
     method: "POST",
+    signal,
     headers: {  
       "Content-Type": "application/json",
       "x-goog-api-key": `${process.env.GEMINI_API_KEY}`
@@ -116,6 +117,7 @@ try {
   console.log(responseText);
   return responseText;
 } catch (err) {
+  if (signal?.aborted) throw err;
   console.log(err);
   throw err;
 }
