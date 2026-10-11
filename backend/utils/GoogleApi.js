@@ -69,7 +69,7 @@ const GoogleAiApi = async(message, signal) =>{
       "x-goog-api-key": `${process.env.GEMINI_API_KEY}`
     },
     body: JSON.stringify({
-      model:    "gemini-3.6-flash", //"gemini-3.5-flash-lite",
+      model: "gemini-3.5-flash-lite",  // "gemini-3.6-flash", ,
       input: message,
       system_instruction: "For current or time-sensitive questions, use Google Search and cite sources when available.",
       tools: [{ type: "google_search" }],
